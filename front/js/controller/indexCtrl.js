@@ -5,16 +5,19 @@ class IndexCtrl {
     model = new Model();
     vue = new IndexVue();
 
-    async showProduct() {
+    async showProducts() {
         const listProducts = await this.model.getListProducts()
         console.log("Liste des produits récupérés dans le modèle :", await this.model.getListProducts());
         
-        console.log("Le canapé ayant l'id 107fb5b75607497b96722bda5b504926 est celui-ci : ", await listProducts[0]);//choper par l'id ??
-
         this.vue.showListProducts(listProducts);
-    }
+    };
+
+    async showProductById() {        
+        console.log("Le produit avec l'id 8906dfda133f4c20a9d0e34f18adcf06 est", await this.model.getProductById("8906dfda133f4c20a9d0e34f18adcf06"));
+    };
 };
 
 let index = new IndexCtrl();
-index.showProduct();
+index.showProducts();
+index.showProductById();
 
