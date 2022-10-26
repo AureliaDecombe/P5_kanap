@@ -1,18 +1,25 @@
 export default class IndexVue {
     showListProducts(listProducts) {
-        const article = document.querySelector('.items');
-        const newProduct = document.createElement("a");
-        article.appendChild(newProduct);
-
+        const section = document.querySelector('.items');
+        
         listProducts.forEach(element => {
-            newProduct.innerHTML += 
-                `<a href="./product.html?id=${element._id}">
-                    <article>
-                        <img src="${element.imageUrl}" alt="${element.altTxt}, ${element.name}">
-                        <h3 class="productName">${element.name}</h3>
-                        <p class="productDescription">${element.description}</p>
-                    </article>
-                </a>`;
+            const a = document.createElement("a");
+            a.setAttribute("href", `./product.html?id=${element._id}`)
+            section.appendChild(a);
+            const article = document.createElement("article");
+            a.appendChild(article);
+            const image = document.createElement("img");
+            image.setAttribute("src", `${element.imageUrl}`);
+            image.setAttribute("alt", `${element.altTxt}` + "," +`${element.name}`);
+            article.appendChild(image);
+            const titre = document.createElement("h3");
+            titre.className = "productName";
+            titre.innerText = element.name;
+            article.appendChild(titre);
+            const p = document.createElement("p");
+            p.className = "productDescription";
+            p.innerText = element.description;
+            article.appendChild(p);            
         }); 
     }
 };

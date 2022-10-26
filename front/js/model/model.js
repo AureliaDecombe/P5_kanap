@@ -3,17 +3,16 @@ export default class Model {
         try {
             let res = await fetch('http://localhost:3000/api/products');
             return res.json();
-        } 
+            
+        }         
         catch (err) {
             console.log(err);
         }
     };
 
-    newId = new URL(window.location.href).searchParams.get("id");
-
-    async getProductById(newId) {
+    async getProductById(idProduct) {
         try {
-            let res = await fetch("http://localhost:3000/api/products/"+ newId);
+            let res = await fetch("http://localhost:3000/api/products/"+ idProduct);
             return res.json();
         }
         catch (err) {
