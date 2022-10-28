@@ -14,11 +14,11 @@ export default class IndexVue {
             article.appendChild(image);
             const titre = document.createElement("h3");
             titre.className = "productName";
-            titre.innerText = element.name;
+            titre.textContent = element.name;
             article.appendChild(titre);
             const p = document.createElement("p");
             p.className = "productDescription";
-            p.innerText = element.description;
+            p.textContent = element.description;
             article.appendChild(p);            
         }); 
     }
