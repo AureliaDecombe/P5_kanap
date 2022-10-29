@@ -1,3 +1,4 @@
+import ProductCtrl from "../controller/productCtrl.js";
 export default class ProductVue {
     showProductDetail(product) {
         document.title = product.name;
@@ -19,22 +20,26 @@ export default class ProductVue {
             color.textContent = product.colors[i];
             colors.appendChild(color);
         }
+        //initialisation du listener sur le bouton d'ajout :
+        this.saveProductsInCart(product);
     };
 
-    showCartArray(product) {        
-        const quantityChosen = document.querySelector("#quantity");
+    saveProductsInCart(product) {        
         const btn_addToCart = document.querySelector("#addToCart");
         btn_addToCart.addEventListener("click", (e)=>{
-            e.preventDefault();//la page ne s'actualise pas quand on clique
+            e.stopPropagation;
+            e.preventDefault;
+            const colors = document.querySelector("#colors");
             const colorChoice = colors.value;
-            const quantityChoice = quantityChosen.value;
-            let cartArray = {
-                productName : title.productName,
+            const qttyRequired = document.querySelector("#quantity");
+            const qttyChoice = qttyRequired.value;
+            let productToSave = {
                 productId : product._id,
                 productColor : colorChoice,
-                productQuantity : quantityChoice,
-                productPrice : price
+                productQtty : qttyChoice,               
             };
+            let productController = new ProductCtrl();
+            productController.saveProductsInBasket(productToSave);
         });
     };
 };
