@@ -26,9 +26,7 @@ export default class ProductVue {
 
     saveProductsInCart(product) {        
         const btn_addToCart = document.querySelector("#addToCart");
-        btn_addToCart.addEventListener("click", (e)=>{
-            e.stopPropagation;
-            e.preventDefault;
+        btn_addToCart.addEventListener("click", ()=>{
             const colors = document.querySelector("#colors");
             const colorChoice = colors.value;
             const qttyRequired = document.querySelector("#quantity");
@@ -39,7 +37,7 @@ export default class ProductVue {
                 productQtty : qttyChoice,               
             };
             let productController = new ProductCtrl();
-            productController.saveProductsInBasket(productToSave);
+            productController.saveBasket(productToSave);
         });
     };
 };

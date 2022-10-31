@@ -1,7 +1,7 @@
 import Model from "../model/model.js";
 import ProductVue from "../vue/productVue.js";
 
-export default class ProductCtrl {
+class ProductCtrl {
     model = new Model();
     vue = new ProductVue();
     product = {};
@@ -18,23 +18,21 @@ export default class ProductCtrl {
         };        
     };
 
-    saveProductsInBasket(productToSave) {
-        const colors = document.querySelector("#colors");
+    /*saveProductsInBasket(product) {
         const colorChoice = colors.value;
         const qttyRequired = document.querySelector("#quantity");
-        const qttyChoice = qttyRequired.value;
-        const productId = this.product._id;                    
-        const title = this.vue.showProductDetail.title;
-        const image = this.vue.showProductDetail.imageUrl;
-        const imageAlt = this.vue.showProductDetail.altTxt;
-        const price = this.vue.showProductDetail.price;
-        
+        const qttyChoice = qttyRequired.value; 
+        const productId = product._id;                   
+        const titleChoice = title.textContent;
+        const image = this.product.imageUrl;
+        const imageAlt = this.product.altTxt;
+        const price = this.product.price;       
 
         if (qttyChoice.value > 0 && qttyChoice.value <=100 && qttyChoice.value != 0 && colorChoice.value != 0) {
             if (localStorage.getItem("cart")) {
                 let productsInCart= JSON.parse(localStorage.getItem("cart", productsCart));
                 let productsCart = JSON.stringify(productsInCart);
-                    console.log(productsCart);
+                    console.log("productsCart est", productsCart);
 
                 const existingCart = productsInCart.find((el) => el.productId === productId && el.colorChoice === colorChoice);
                     console.log("existing cart est", existingCart);
@@ -48,74 +46,123 @@ export default class ProductCtrl {
                 } else {
                     let productsInCart= JSON.parse(localStorage.getItem("cart", productsCart));
                         console.log(productsCart);
-
+                     
                     let productToSave = {
                         productId : product._id,
-                        productName : title,
+                        productName : titleChoice,
                         productColor : colorChoice,
                         productQtty : qttyChoice,
                         productImg : image,
                         productImgAlt : imageAlt,
                         productPrice : price
                     };
-                    /*const title = this.vue.showProductDetail.title;
-                    const actualTitle = title.textContent;
-                    const image = this.vue.showProductDetail.imageUrl;
-                    const actualImage = image.src;
-                    const imageAlt = this.vue.showProductDetail.altTxt;
-                    const actualAlt = imageAlt.alt;
-                    const price = this.vue.showProductDetail.price;
-                    const actualPrice = price.textContent;
-
-                    let productToSave = {
-                        productId : product._id,
-                        productName : actualTitle,
-                        productColor : colorChoice,
-                        productQtty : qttyChoice,
-                        productImg : actualImage,
-                        productImgAlt : actualAlt,
-                        productPrice : actualPrice
-                    };*/
                         console.log(productToSave);
                                             
                     productsInCart.push(productToSave); 
 
                 }
                 localStorage.setItem("cart", productsCart);
-
-                alert("Ajouté au panier !");
+                    console.log("Ajouté au panier !");
             }
-        } else {
+        } else { 
             let productsInCart = [];
 
             let productToSave = {
-                productId : product._id,
-                productName : title,
+                product_Id : productId,
+                productName : titleChoice,
                 productColor : colorChoice,
                 productQtty : qttyChoice,
                 productImg : image,
                 productImgAlt : imageAlt,
                 productPrice : price
-            };
-
+            }
+            
             productsInCart.push(productToSave);
+            console.log("productsInCart est", productsInCart);
             
             let productsCart = JSON.stringify(productsInCart);
             localStorage.setItem("cart", productsCart);
-
-            alert("Ajouté au panier !");
+                console.log("productsCart est", productsCart);
+                //console.log("Ajouté au panier !");
         };
+        
 
         /*let productsInCart = [];
         productsInCart.push(productToSave);
         
         let productsCart = JSON.stringify(productsInCart);
-        localStorage.setItem("cart", productsCart);*/
+        localStorage.setItem("cart", productsCart);
 
-    };
+    };*/
 };
+export default class Basket{
+    model = new Model();
+    vue = new ProductVue();
+    product = {};
+
+    constructor(){  
+        let basket = localStorage.getItem("basket");
+        if(basket == null){
+            this.basket = [];
+        }else{
+            this.basket = JSON.parse(basket);
+        }
+    }
+
+    saveBasket(){
+        localStorage.setItem("basket", JSON.stringify(this.basket));
+    }
+
+    addBasket(product){
+        let foundProduct = this.basket.find(p => p.id == product.id);
+        if(foundProduct != undefined){
+            foundProduct.quantity++;
+        }else{
+            product.quantity = 1;
+            this.basket.push(product);
+        }
+        this.saveBasket();
+    }
+
+    removeFromBasket(product){
+        this.basket = this.basket.filter(p => p.id != product.id);
+        this.saveBasket();
+    }
+
+    changeQuantity(product,quantity){
+        let foundProduct = this.basket.find(p => p.id == product.id);
+        if(foundProduct != undefined){
+            foundProduct.quantity += quantity;
+            if(foundProduct.quantity <= 0){
+                removeFromBasket(foundProduct);
+            }else{
+                this.saveBasket();
+            }
+            if(foundProduct.quantity > 100){
+                foundProduct.quantity = 100;
+                this.saveBasket();
+            }
+        }
+    }
+
+    getProductsNumber(){
+        let number = 0;
+        for(let product of this.basket){
+            number += product.quantity;
+        }
+        return number;
+    }
+
+    getTotalPrice(){
+        let total = 0;
+        for(let product of this.basket){
+            total += product.quantity * product.price;
+        }
+        return total;
+    }
+}
 
 let product = new ProductCtrl();
 
 product.showProductById();
-product.saveProductsInBasket();
+this.basket.saveBasket();
