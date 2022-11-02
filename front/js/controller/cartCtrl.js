@@ -1,13 +1,9 @@
 import Model from "../model/model.js";
-import ProductCtrl from "../controller/productCtrl.js";
-import ProductVue from "../vue/productVue.js";
 import CartVue from "../vue/cartVue.js";
 
 class CartCtrl {
     model = new Model();
-    vue = new ProductVue();
-    product = new ProductCtrl();
-    cartVue = new CartVue();
+    cartVue = new CartVue();//ecrire là-bas méthode qui prend le localstorage en paramètres
     cart = {};
 
     async showCart() {            
@@ -20,6 +16,22 @@ class CartCtrl {
         this.vue.saveProductsInCart(this.product);
         this.product.saveProductsInBasket(this.product);
     };
+
+    getProductsNumber(){
+        let number = 0;
+        for(let product of this.basket){
+            number += product.quantity;
+        }
+        return number;
+    }
+
+    getTotalPrice(){
+        let total = 0;
+        for(let product of this.basket){
+            total += product.quantity * product.price;
+        }
+        return total;
+    }
 };
 
 let cart = new CartCtrl();
