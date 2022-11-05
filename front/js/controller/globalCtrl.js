@@ -27,12 +27,8 @@ export default class GlobalCtrl {
         }
     }
 
-    verifiyColor(product) {
-        
-    }
-
-    verifiyProductQtty(product) {
-        if(JSON.parse(product.productQtty) <= 0 || JSON.parse(product.productQtty) > 100 || !Number.isInteger(JSON.parse(product.productQtty))){
+    verifiyCompliance(product) {
+        if(JSON.parse(product.productQtty) <= 0 || JSON.parse(product.productQtty) > 100 || !Number.isInteger(JSON.parse(product.productQtty)) || product.productColor == 0){
             return 0;
         }else{
             let productsInCart = JSON.parse(localStorage.getItem("cart"));
