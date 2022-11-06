@@ -43,7 +43,8 @@ export default class ProductVue {
                 productQtty : JSON.parse(qttyChoice), 
                 productName : product.name,
                 productImgUrl : product.imageUrl,
-                productAltTxt : product.altTxt            
+                productAltTxt : product.altTxt,
+                productPrice : product.price            
             };
             console.log("Product to save :", productToSave);
             if (this.globalController.verifiyCompliance(productToSave) == 0) {
