@@ -1,4 +1,7 @@
+//import CartCtrl from "./cartCtrl.js";
 export default class GlobalCtrl {
+    //cartCtrl = new CartCtrl();
+
     saveProductsInCart(product) {//product=produit à enregistrer en format JSON 
         if((localStorage.getItem("cart")) == null){//si le panier est vide, j'enregistre qque chose pour la première fois:
             let productsInCart = [];
@@ -6,10 +9,8 @@ export default class GlobalCtrl {
             localStorage.setItem("cart", JSON.stringify(productsInCart));
                 //console.log("Ajouté au panier !");
         }else{//si un panier existe
-            let productsInCart = JSON.parse(localStorage.getItem("cart"));
-            
+            let productsInCart = JSON.parse(localStorage.getItem("cart"));            
             let foundProduct = productsInCart.find((el) => el.productId === product.productId && el.productColor === product.productColor);
-            
             if(foundProduct != undefined){
                 const newProductInCart = productsInCart.map((el) => {
                     if (el.productId === product.productId && el.productColor === product.productColor) {
@@ -27,7 +28,7 @@ export default class GlobalCtrl {
         }
     }
 
-    verifiyCompliance(product) {
+    verifiyConditions(product) {
         if(JSON.parse(product.productQtty) <= 0 || JSON.parse(product.productQtty) > 100 || !Number.isInteger(JSON.parse(product.productQtty)) || product.productColor == 0){
             return 0;
         }else{
@@ -44,4 +45,72 @@ export default class GlobalCtrl {
         }
         return 1;
     }
+
+    removeProduct(productId, productColor){
+        let productsInCart = JSON.parse(localStorage.getItem("cart"));
+        productsInCart = productsInCart.filter((el) => {
+            if (el.productId != productId || el.productColor != productColor) {
+                return el;
+            }                
+        });            
+        localStorage.setItem("cart", JSON.stringify(productsInCart));
+        document.location.reload();//méthode facile
+        //this.cartCtrl.cartControl();
+        
+    }
+
+    adjustQuantity(product){
+        let productsInCart = JSON.parse(localStorage.getItem("cart"));
+        let foundProduct = productsInCart.find((el) => el.productId === product.productId && el.productColor === product.productColor);
+        if(foundProduct != undefined){
+            foundProduct.productQtty += product.productQtty;
+            if(foundProduct.productQtty <= 0){
+                this.removeProduct(foundProduct);
+            }else{
+                localStorage.setItem("cart", JSON.stringify(productsInCart));
+            }
+        }
+    }
+
+    /*
+    removeFromBasket(product){
+        this.basket = this.basket.filter(p => p.id != product.id);
+        this.saveBasket();
+    }
+
+    changeQuantity(product,quantity){
+        let foundProduct = this.basket.find(p => p.id == product.id);
+        if(foundProduct != undefined){
+            foundProduct.quantity += quantity;
+            if(foundProduct.quantity <= 0){
+                removeFromBasket(foundProduct);
+            }else{
+                this.saveBasket();
+            }
+            if(foundProduct.quantity > 100){
+                foundProduct.quantity = 100;
+                this.saveBasket();
+            }
+        }
+    }
+    
+    getProductsNumber(){
+        let number = 0;
+        for(let product of basket){
+            number += product.quantity;
+        }
+        return number;
+    }
+
+    getTotalPrice(){
+        let total = 0;
+        for(let product of this.basket){
+            total += product.quantity * product.price;
+        }
+        return total;
+    }*/
 };
+
+//modifier quantité(si trop dur, je zappe)
+//controler formulaire
+//passer commande

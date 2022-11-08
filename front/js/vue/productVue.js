@@ -1,9 +1,6 @@
 import GlobalCtrl from "../controller/globalCtrl.js";
 export default class ProductVue {
-    //
-    constructor(){
-        this.globalController = new GlobalCtrl();
-    }
+    globalController = new GlobalCtrl();
 
     showProductDetail(product) {
         document.title = product.name;
@@ -43,11 +40,10 @@ export default class ProductVue {
                 productQtty : JSON.parse(qttyChoice), 
                 productName : product.name,
                 productImgUrl : product.imageUrl,
-                productAltTxt : product.altTxt,
-                productPrice : product.price            
+                productAltTxt : product.altTxt            
             };
             console.log("Product to save :", productToSave);
-            if (this.globalController.verifiyCompliance(productToSave) == 0) {
+            if (this.globalController.verifiyConditions(productToSave) == 0) {
                 alert("Merci de vérifier les options (couleur et/ou quantité) 🙇‍♀️");
             } else {
                 this.globalController.saveProductsInCart(productToSave);
