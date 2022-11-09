@@ -7,6 +7,7 @@ export default class GlobalCtrl {
             let productsInCart = [];
             productsInCart.push(product);
             localStorage.setItem("cart", JSON.stringify(productsInCart));
+            alert("Le produit est ajouté au panier !");
                 //console.log("Ajouté au panier !");
         }else{//si un panier existe
             let productsInCart = JSON.parse(localStorage.getItem("cart"));            
@@ -21,9 +22,11 @@ export default class GlobalCtrl {
                     }                
                 });
                 localStorage.setItem("cart", JSON.stringify(newProductInCart));
+                alert("Le produit est ajouté au panier !");
             }else{
                 productsInCart.push(product);
                 localStorage.setItem("cart", JSON.stringify(productsInCart));
+                alert("Le produit est ajouté au panier !");
             }            
         }
     }
@@ -54,22 +57,26 @@ export default class GlobalCtrl {
             }                
         });            
         localStorage.setItem("cart", JSON.stringify(productsInCart));
+        alert("Le produit est supprimé du panier !");
         document.location.reload();//méthode facile
-        //this.cartCtrl.cartControl();
-        
+        //this.cartCtrl.cartControl();        
     }
 
-    adjustQuantity(product){
+    adjustQuantity(productId, productColor, inputQtty){
         let productsInCart = JSON.parse(localStorage.getItem("cart"));
-        let foundProduct = productsInCart.find((el) => el.productId === product.productId && el.productColor === product.productColor);
+        let foundProduct = productsInCart.find((el) => el.productId === productId && el.productColor === productColor);
         if(foundProduct != undefined){
-            foundProduct.productQtty += product.productQtty;
-            if(foundProduct.productQtty <= 0){
-                this.removeProduct(foundProduct);
+            foundProduct.productQtty = inputQtty;
+            this.verifiyConditions(foundProduct);
+            if(this.verifiyConditions(foundProduct) == 0){
+                alert("La quantité doit être comprise entre 1 et 100, le produit est supprimé du panier.");
+                this.removeProduct(productId, productColor);
             }else{
                 localStorage.setItem("cart", JSON.stringify(productsInCart));
+                alert("Le panier a été modifié !");
+                document.location.reload();
             }
-        }
+        };
     }
 
     /*

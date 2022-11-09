@@ -47,14 +47,18 @@ export default class CartVue {
             const pQuantity = document.createElement("p");
             pQuantity.textContent = "Qté : ";
             divQuantity.appendChild(pQuantity);
-            const input = document.createElement("input");
-            input.className = "itemQuantity";
-            input.type = Number;
-            input.name = "itemQuantity";
-            input.min = 1;
-            input.max = 100;
-            input.value = product.productQtty;
-            divQuantity.appendChild(input);
+            const inputQtty = document.createElement("input");
+            inputQtty.className = "itemQuantity";
+            inputQtty.type = Number;
+            inputQtty.name = "itemQuantity";
+            inputQtty.min = 1;
+            inputQtty.max = 100;
+            inputQtty.value = product.productQtty;
+            divQuantity.appendChild(inputQtty);
+            inputQtty.addEventListener("change", () => {
+                console.log("Produit à modifier :" + product.productId, product.productColor, inputQtty.value);
+                this.globalController.adjustQuantity(product.productId, product.productColor, inputQtty.value);
+            });
             let divDelete = document.createElement("div");
             divDelete.className = "cart__item__content__settings__delete";
             divSettings.appendChild(divDelete);
@@ -63,7 +67,7 @@ export default class CartVue {
             pDeleteItem.textContent = "Supprimer";
             divDelete.appendChild(pDeleteItem);
             pDeleteItem.addEventListener("click", () => {
-                console.log("id du produit à supprimer " + product.productId, product.productColor);
+                console.log("Produit à supprimer " + product.productId, product.productColor);
                 this.globalController.removeProduct(product.productId, product.productColor);
             });
         }
@@ -75,25 +79,5 @@ export default class CartVue {
         const quantity = document.querySelector("#totalQuantity");
         quantity.textContent = totalQtty;
 
-    }
-
-    adjustQuantityFromBasket(){//insérer eventlistener dans showcart (penser à réutiliser verifyconditions puis envoyer simplement au global)
-        const input_qtty = document.querySelector(".itemQuantity");
-        input_qtty.addEventListener("change", (itemQuantity) => {
-            const productToGet = document.querySelector(".cart__item");
-            const productId = productToGet.dataset.id;
-            const idToGet = productId.value;
-            const productColor = productToGet.dataset.color;
-            const colorToGet = productColor.value;
-            const productQtty = document.querySelector(".itemQuantity");
-            const newQtty = productQtty.value;
-            let qttyToAdjust = {
-                productId : idToGet,
-                productColor : colorToGet,
-                productQtty : newQtty
-            };
-            console.log("Produit à modifier :", qttyToAdjust);
-            this.globalController.adjustQuantity(qttyToAdjust);
-        });
     }
 };
