@@ -26,30 +26,17 @@ export default class CartCtrl {
                 totalQtty += productSaved.productQtty;
                 this.vue.showCart(productSaved);
                 this.vue.showTotalQttyAndPrice(totalPrice, totalQtty);
-            });
-            //this.vue.removeFromBasket(productsInCart);
-            //this.vue.adjustQuantityFromBasket(productsInCart);     
-        }
-               
+            });   
+        } else {
+            alert("Votre panier est vide, veuillez tout d'abord poursuivre vos achats...")
+        }               
+    }
+
+    formCtrl() {
+        this.vue.getFormEntries();
     }
 };
 
 let cart = new CartCtrl();
 cart.cartControl();
-
-/**
-    getProductsNumber(){
-        let number = 0;
-        for(let product of basket){
-            number += product.quantity;
-        }
-        return number;
-    }
-
-    getTotalPrice(){
-        let total = 0;
-        for(let product of this.basket){
-            total += product.quantity * product.price;
-        }
-        return total;
-    } */
+cart.formCtrl();
