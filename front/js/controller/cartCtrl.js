@@ -2,6 +2,7 @@ import Model from "../model/model.js";
 import CartVue from "../vue/cartVue.js";
 
 export default class CartCtrl {
+    
     model = new Model();
     vue = new CartVue();//ecrire là-bas méthode qui prend le localstorage en paramètres
     
@@ -27,7 +28,7 @@ export default class CartCtrl {
                 this.vue.showCart(productSaved);
                 this.vue.showTotalQttyAndPrice(totalPrice, totalQtty);
             });   
-        } else {
+        } if (productsInCart == null || productsInCart.length == 0) {
             alert("Votre panier est vide, veuillez tout d'abord poursuivre vos achats...")
         }               
     }

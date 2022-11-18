@@ -1,17 +1,17 @@
 import Model from "../model/model.js";
 export default class GlobalCtrl {
+
     model = new Model();
-    //cartCtrl = new CartCtrl();
-    saveProductsInCart(product) {//product=produit à enregistrer en format JSON 
-        if((localStorage.getItem("cart")) == null){//si le panier est vide, j'enregistre qque chose pour la première fois:
-            let productsInCart = [];
+
+    saveCartInStorage(product) {
+        if ((localStorage.getItem("cart")) == null){
             productsInCart.push(product);
             localStorage.setItem("cart", JSON.stringify(productsInCart));
             alert("Le produit est ajouté au panier !");
-        }else{//si un panier existe
+        } else {
             let productsInCart = JSON.parse(localStorage.getItem("cart"));            
             let foundProduct = productsInCart.find((el) => el.productId === product.productId && el.productColor === product.productColor);
-            if(foundProduct != undefined){
+            if (foundProduct != undefined){
                 const newProductInCart = productsInCart.map((el) => {
                     if (el.productId === product.productId && el.productColor === product.productColor) {
                         el.productQtty = JSON.parse(el.productQtty) + JSON.parse(product.productQtty);
@@ -22,7 +22,7 @@ export default class GlobalCtrl {
                 });
                 localStorage.setItem("cart", JSON.stringify(newProductInCart));
                 alert("Le produit est ajouté au panier !");
-            }else{
+            } else {
                 productsInCart.push(product);
                 localStorage.setItem("cart", JSON.stringify(productsInCart));
                 alert("Le produit est ajouté au panier !");
@@ -30,16 +30,16 @@ export default class GlobalCtrl {
         }
     }
 
-    verifiyConditions(product) {
-        if(JSON.parse(product.productQtty) <= 0 || JSON.parse(product.productQtty) > 100 || !Number.isInteger(JSON.parse(product.productQtty)) || product.productColor == 0){
+    verifiyCartConditions(product) {
+        if (product.productQtty <= 0 || product.productQtty > 100 || !Number.isInteger(JSON.parse(product.productQtty)) || product.productQtty == NaN || product.productColor == 0){
             return 0;
-        }else{
+        } else {
             let productsInCart = JSON.parse(localStorage.getItem("cart"));
             if (productsInCart != null){
                 let foundProduct = productsInCart.find((el) => el.productId === product.productId && el.productColor === product.productColor);
-                if(foundProduct != undefined){
+                if (foundProduct != undefined){
                     const totalQtty = JSON.parse(foundProduct.productQtty) + JSON.parse(product.productQtty);
-                    if(totalQtty > 100){
+                    if (totalQtty > 100){
                         return 0;
                     }
                 }
@@ -57,20 +57,19 @@ export default class GlobalCtrl {
         });            
         localStorage.setItem("cart", JSON.stringify(productsInCart));
         alert("Le produit est supprimé du panier !");
-        document.location.reload();//méthode facile
-        //this.cartCtrl.cartControl();        
+        document.location.reload();        
     }
 
     adjustQuantity(productId, productColor, inputQtty) {
         let productsInCart = JSON.parse(localStorage.getItem("cart"));
         let foundProduct = productsInCart.find((el) => el.productId === productId && el.productColor === productColor);
-        if(foundProduct != undefined){
+        if (foundProduct != undefined){
             foundProduct.productQtty = inputQtty;
-            this.verifiyConditions(foundProduct);
-            if(this.verifiyConditions(foundProduct) == 0){
-                alert("La quantité doit être comprise entre 1 et 100, le produit est supprimé du panier.");
+            this.verifiyCartConditions(foundProduct);
+            if (this.verifiyCartConditions(foundProduct) == 0){
+                alert("La quantité doit être comprise entre 1 et 100 !");
                 this.removeProduct(productId, productColor);
-            }else{
+            } else {
                 localStorage.setItem("cart", JSON.stringify(productsInCart));
                 alert("Le panier a été modifié !");
                 document.location.reload();
@@ -81,7 +80,7 @@ export default class GlobalCtrl {
     verifyFirstName(inputFirstName) {
         const firstName = inputFirstName.value;
         let firstNameErrorMsg = document.querySelector("#firstNameErrorMsg");
-        if (/^[a-zA-Zàâäéèêëïîôöùûüÿç '.-]{2,31}$/.test(firstName)) {// (La regex :^\p{L}.{2,}$ accepte tous les alphabets et tous les caractères)
+        if (/^[a-zA-Zàâäéèêëïîôöùûüÿç '.-]{2,31}$/.test(firstName)) {// (La regex : ^\p{L}.{2,}$ accepte tous les alphabets et tous les caractères mais c'est trop...)
             firstNameErrorMsg.textContent = "";
             return 1;
         } else {      
@@ -155,10 +154,8 @@ export default class GlobalCtrl {
             };
             const userDataArray = Object.values(userData.contact);
             let correctData = (currentValue) => currentValue != '';
-            console.log("userDataArray :", userDataArray, "correctData", userDataArray.every(correctData));
-            if(userDataArray.every(correctData) == true){
+            if (userDataArray.every(correctData) == true){
                 const responseOrder = await this.model.postOrder(userData);   
-                console.log("Données à envoyer :", userData, "responseOrder :", responseOrder)
                 document.location = "confirmation.html?orderId="+responseOrder.orderId;
             } else {
                 alert("Merci de remplir tous les champs du formulaire 🙇‍♀️")

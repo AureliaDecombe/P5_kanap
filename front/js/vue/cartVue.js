@@ -1,5 +1,6 @@
 import GlobalCtrl from "../controller/globalCtrl.js";
 export default class CartVue {
+    
     globalController = new GlobalCtrl();
 
     showCart (product) {
@@ -53,7 +54,6 @@ export default class CartVue {
         inputQtty.value = product.productQtty;
         divQuantity.appendChild(inputQtty);
         inputQtty.addEventListener("change", () => {
-            console.log("Produit à modifier :" + product.productId, product.productColor, inputQtty.value);
             this.globalController.adjustQuantity(product.productId, product.productColor, inputQtty.value);
         });
         let divDelete = document.createElement("div");
@@ -64,7 +64,6 @@ export default class CartVue {
         pDeleteItem.textContent = "Supprimer";
         divDelete.appendChild(pDeleteItem);
         pDeleteItem.addEventListener("click", () => {
-            console.log("Produit à supprimer " + product.productId, product.productColor);
             this.globalController.removeProduct(product.productId, product.productColor);
         });
     }
@@ -80,27 +79,22 @@ export default class CartVue {
         const inputFirstName = document.querySelector("#firstName");
         inputFirstName.addEventListener("change", () => {
             this.globalController.verifyFirstName(inputFirstName)
-            console.log("prénom :", inputFirstName.value)
         });
         const inputLastName = document.querySelector("#lastName");
         inputLastName.addEventListener("change", () => {
             this.globalController.verifyLastName(inputLastName)
-            console.log("nom :", inputLastName.value)
         });
         const inputAddress = document.querySelector("#address");
         inputAddress.addEventListener("change", () => {
             this.globalController.verifyAddress(inputAddress)
-            console.log("adresse :", inputAddress.value)
         });
         const inputCity = document.querySelector("#city");
         inputCity.addEventListener("change", () => {
             this.globalController.verifyCity(inputCity)
-            console.log("ville :", inputCity.value)
         });
         const inputEmail = document.querySelector("#email");
         inputEmail.addEventListener("change", () => {
             this.globalController.verifyEmail(inputEmail)
-            console.log("e-mail :", inputEmail.value)
         })
         const order = document.querySelector("#order");
         order.addEventListener("click", (e) => {
