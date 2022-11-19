@@ -5,9 +5,13 @@ class IndexCtrl {
     model = new Model();
     vue = new IndexVue();
 
+    /**
+     * Récupère la liste des produits disponibles, cf model_model_getProductsList ;
+     * Passe {productsList} en paramètre de la méthode vue_indexVue_showProductsList().
+     */
     async showProducts() {
-        const listProducts = await this.model.getListProducts()
-        this.vue.showListProducts(listProducts);
+        const productsList = await this.model.getProductsList()
+        this.vue.showProductsList(productsList);
     };
 };
 

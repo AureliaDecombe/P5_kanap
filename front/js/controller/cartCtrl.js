@@ -4,7 +4,7 @@ import CartVue from "../vue/cartVue.js";
 export default class CartCtrl {
     
     model = new Model();
-    vue = new CartVue();//ecrire là-bas méthode qui prend le localstorage en paramètres
+    vue = new CartVue();
     
     cartControl() {
         let productsInCart = JSON.parse(localStorage.getItem("cart"));

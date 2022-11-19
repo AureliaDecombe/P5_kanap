@@ -1,10 +1,10 @@
 export default class Model {
 
     /**
-     * Récupère la liste des produits sur l'API fournie (localisation externe) et renvoie l'objet correspondant au format JSON (JavaScriptObjectNotation).
+     * Récupère la liste des produits sur l'API fournie (localisation externe) et renvoie une promesse contenant l'objet correspondant au format JSON (JavaScriptObjectNotation).
      * @returns { Promise }
      */
-    async getListProducts() {
+    async getProductsList() {
         try {
             let res = await fetch('http://localhost:3000/api/products');
             return res.json();            
@@ -14,7 +14,7 @@ export default class Model {
     };
 
     /**
-     * Récupère la liste des produits sur l'API fournie (localisation externe) en y associant leur Id et renvoie l'objet correspondant au format JSON (JavaScriptObjectNotation).
+     * Récupère la liste des produits sur l'API fournie (localisation externe) en y associant leur Id et renvoie une promesse contenant l'objet correspondant au format JSON.
      * @param { String } idProduct 
      * @returns { Promise }
      */
@@ -28,7 +28,7 @@ export default class Model {
     };
     
     /**
-     * Envoie les données utilisateur (le panier et les coordonnées) à l'API afin de finaliser la commande et de vider le localstorage
+     * Envoie une promesse contenant les données utilisateur (le panier et les coordonnées) à l'API.
      * @param { Object | Array } userData 
      * @returns { Promise }
      */

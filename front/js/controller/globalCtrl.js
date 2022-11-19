@@ -3,6 +3,16 @@ export default class GlobalCtrl {
 
     model = new Model();
 
+    /**
+     * Enregistre le produit souhaité dans le panier après plusieurs vérifications.
+     * À un {product} passé en paramètre dans vue_productVue_saveProductInBasket() l.47_69 :
+     * Vérifie si un panier existe déjà ou non ;
+     * Le cas contraire, en crée un ;
+     * Le cas échéant, vérifie si un même produit de même couleur existe dans le panier ;
+     * Le cas échéant, modifie la quantité requise (en additionant la nouvelle à l'ancienne);
+     * Le cas contraire, ajoute le produit au panier.
+     * @param { Object } product 
+     */
     saveCartInStorage(product) {
         if ((localStorage.getItem("cart")) == null){
             productsInCart.push(product);
@@ -30,6 +40,13 @@ export default class GlobalCtrl {
         }
     }
 
+    /**
+     * Vérifie les valeurs saisies par l'utilisateur.
+     * À un {product} passé en paramètre dans vue_productVue_saveProductInBasket() l.47_66 ;
+     * Retourne un booléen duquel dépendra la diffusion d'une alerte ou l'application de la méthode citée ci-dessus.
+     * @param { Object } product 
+     * @returns { Boolean }
+     */
     verifiyCartConditions(product) {
         if (product.productQtty <= 0 || product.productQtty > 100 || !Number.isInteger(JSON.parse(product.productQtty)) || product.productQtty == NaN || product.productColor == 0){
             return 0;
@@ -48,6 +65,15 @@ export default class GlobalCtrl {
         return 1;
     }
 
+    /**
+     * Supprime un produit du panier en tenant compte de sa couleur.
+     * À un {product} passé en paramètre dans vue_cartVue_showCart l.11, lors du clic l.80_86 :
+     * Parcourt les produits du panier pour supprimer toutes les références identiques ;
+     * Sauvegarde le panier à jour ;
+     * Recharge la page afin de mettre la vue à jour.
+     * @param { String } productId 
+     * @param { String } productColor 
+     */
     removeProduct(productId, productColor) {
         let productsInCart = JSON.parse(localStorage.getItem("cart"));
         productsInCart = productsInCart.filter((el) => {
@@ -60,6 +86,18 @@ export default class GlobalCtrl {
         document.location.reload();        
     }
 
+    /**
+     * Ajuste la quantité de produit désirée depuis la page panier après plusieurs vérifications.
+     * À un {product} passé en paramètre dans vue_cartVue_showCart l.11, lors de la perte du focus de l'input l.64_74 :
+     * Parcourt le panier pour trouver le produit désiré ;
+     * Applique la méthode verifiyCartConditions() l.50 à la nouvelle quantité ;
+     * Si elle est viable, remplace l'ancienne quantité par la nouvelle ;
+     * Sauvegarde le panier à jour ;
+     * Recharge la page afin de mettre la vue à jour.
+     * @param { String } productId 
+     * @param { String } productColor 
+     * @param { Number } inputQtty 
+     */
     adjustQuantity(productId, productColor, inputQtty) {
         let productsInCart = JSON.parse(localStorage.getItem("cart"));
         let foundProduct = productsInCart.find((el) => el.productId === productId && el.productColor === productColor);
@@ -77,6 +115,11 @@ export default class GlobalCtrl {
         }
     }
 
+    /**
+     * Vérifie que les données saisies dans le formulaire (cf vue_cartVue_getFormEntries() l.109) correspondent à nos attentes.
+     * @param { String } inputFirstName 
+     * @returns { Boolean }
+     */
     verifyFirstName(inputFirstName) {
         const firstName = inputFirstName.value;
         let firstNameErrorMsg = document.querySelector("#firstNameErrorMsg");
@@ -89,7 +132,12 @@ export default class GlobalCtrl {
         }
     }
 
-    verifyLastName(inputLastName) {
+    /**
+     * Vérifie que les données saisies dans le formulaire (cf vue_cartVue_getFormEntries() l.109) correspondent à nos attentes.
+     * @param { String } inputLastName 
+     * @returns { Boolean }
+     */
+     verifyLastName(inputLastName) {
         const lastName = inputLastName.value;
         let lastNameErrorMsg = document.querySelector("#lastNameErrorMsg");
         if (/^[a-zA-Zàâäéèêëïîôöùûüÿç '.-]{2,31}$/.test(lastName)) {
@@ -101,7 +149,12 @@ export default class GlobalCtrl {
         }
     }
 
-    verifyAddress(inputAddress) {
+    /**
+     * Vérifie que les données saisies dans le formulaire (cf vue_cartVue_getFormEntries() l.109) correspondent à nos attentes.
+     * @param { String } inputAddress 
+     * @returns { Boolean }
+     */
+     verifyAddress(inputAddress) {
         const address = inputAddress.value;
         let addressErrorMsg = document.querySelector("#addressErrorMsg");
         if (/^[a-zA-Z0-9\sàâäéèêëïîôöùûüÿç,.'-]*$/.test(address)) {
@@ -113,7 +166,12 @@ export default class GlobalCtrl {
         }
     }
     
-    verifyCity(inputCity) {
+    /**
+     * Vérifie que les données saisies dans le formulaire (cf vue_cartVue_getFormEntries() l.109) correspondent à nos attentes.
+     * @param { String } inputCity 
+     * @returns { Boolean }
+     */
+     verifyCity(inputCity) {
         const city = inputCity.value;
         let cityErrorMsg = document.querySelector("#cityErrorMsg");
         if (/^[a-zA-Z0-9\sàâäéèêëïîôöùûüÿç.'-]*$/.test(city)) {
@@ -125,7 +183,12 @@ export default class GlobalCtrl {
         }
     }
         
-    verifyEmail(inputEmail) {
+    /**
+     * Vérifie que les données saisies dans le formulaire (cf vue_cartVue_getFormEntries() l.109) correspondent à nos attentes.
+     * @param { String } inputEmail
+     * @returns { Boolean }
+     */
+     verifyEmail(inputEmail) {
         const email = inputEmail.value;
         let emailErrorMsg = document.querySelector("#emailErrorMsg");
         if (/^[a-zA-Z0-9_-]+@[a-zA-Z0-9-]{2,}[.][a-zA-Z]{2,}$/.test(email)) {
@@ -137,6 +200,19 @@ export default class GlobalCtrl {
         }
     }
 
+    /**
+     * Valide la commande après plusieurs vérifications.
+     * À l'application de vue_cartVue_getFormEntries() l.109_130 ;
+     * Vérifie qu'un panier existe bien ;
+     * Le cas échéant, récupère les données utilisateur (en vérifiant qu'aucun champs ne soit vide) ;
+     * Attend la réponse de l'API (cf model_model_postOrder() l.35) avec les données utilisateur passées en paramètre ;
+     * Envoie l'utilisateur sur la page confirmation correspondant à sa commande.
+     * @param { String } firstName 
+     * @param { String } lastName 
+     * @param { String } address 
+     * @param { String } city 
+     * @param { String } email 
+     */
     async confirmOrder(firstName, lastName, address, city, email) {
         let productsInCart = JSON.parse(localStorage.getItem("cart"));
         if (productsInCart == null){
