@@ -1,10 +1,11 @@
-import Model from "../model/model.js";
-
 class ConfirmationCtrl {
-    
-    model = new Model();
 
-    getOrderData (){
+    /**
+     * Confirme la commande :
+     * Rècupère l'orderId donnnée par le back et l'affiche à l'utilisateur ;
+     * Appelle la méthode suivante.
+     */
+    confirmOrder (){
         var params = (new URL(document.location)).searchParams;
         if (params.has('orderId')) {
             const orderId = params.get('orderId');
@@ -14,10 +15,13 @@ class ConfirmationCtrl {
         }
     }
 
+    /**
+     * Vide le panier.
+     */
     deleteOrderData (){
         localStorage.clear();
     }
 }
 
 let confirmation = new ConfirmationCtrl();
-confirmation.getOrderData();
+confirmation.confirmOrder();

@@ -1,11 +1,19 @@
 import Model from "../model/model.js";
 import CartVue from "../vue/cartVue.js";
-
 export default class CartCtrl {
     
     model = new Model();
     vue = new CartVue();
     
+    /**
+     * Contrôle le panier :
+     * Vérifie qu'il ne soit pas vide ;
+     * Le cas échéant, récupère les éléments du panier depuis le local storage ;
+     * Récupère le prix en appelant model_model_getProductById() l.21;
+     * Crée l'objet {productSaved} à partir de ces données ;
+     * Calcule la quantité et le prix total ;
+     * Passe {productSaved} en paramètre de vue_cartVue_showCart() l.11 puis les totaux à vue_cartVue_showTotalQttyAndPrice() l.95.
+     */
     cartControl() {
         let productsInCart = JSON.parse(localStorage.getItem("cart"));
         let totalPrice = 0;
@@ -33,6 +41,9 @@ export default class CartCtrl {
         }               
     }
 
+    /**
+     * Contrôle du formulaire en appelant vue_cartVue_getFormEntries() l.108.
+     */
     formCtrl() {
         this.vue.getFormEntries();
     }

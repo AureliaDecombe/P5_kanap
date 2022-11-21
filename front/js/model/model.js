@@ -28,7 +28,7 @@ export default class Model {
     };
     
     /**
-     * Envoie une promesse contenant les données utilisateur (le panier et les coordonnées) à l'API.
+     * Envoie une promesse au format JSON contenant les données utilisateur (le panier et les coordonnées) à l'API.
      * @param { Object | Array } userData 
      * @returns { Promise }
      */

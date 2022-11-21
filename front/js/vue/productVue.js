@@ -40,8 +40,8 @@ export default class ProductVue {
     /**
      * Initie une écoute au clic du bonton <ajouter au panier> afin de récupérer le produit désiré ;
      * Crée un objet avec les données requises ;
-     * Vérifie leur justesse, cf controller_globalCtrl_verifyCartConditions() l.33 ;
-     * Le cas échéant, les enregistre dans le local storage, cf controller_globalCtrl_saveCartInStorage() l.6.
+     * Vérifie leur justesse, cf controller_globalCtrl_verifyCartConditions() l.51 ;
+     * Le cas échéant, les enregistre dans le local storage, cf controller_globalCtrl_saveCartInStorage() l.16.
      * @param { Object } product 
      */
     saveProductInBasket(product) {

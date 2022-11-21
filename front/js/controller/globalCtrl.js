@@ -15,6 +15,7 @@ export default class GlobalCtrl {
      */
     saveCartInStorage(product) {
         if ((localStorage.getItem("cart")) == null){
+            let productsInCart = [];
             productsInCart.push(product);
             localStorage.setItem("cart", JSON.stringify(productsInCart));
             alert("Le produit est ajouté au panier !");
@@ -67,7 +68,7 @@ export default class GlobalCtrl {
 
     /**
      * Supprime un produit du panier en tenant compte de sa couleur.
-     * À un {product} passé en paramètre dans vue_cartVue_showCart l.11, lors du clic l.80_86 :
+     * À un {product} passé en paramètre dans vue_cartVue_showCart l.11, lors du clic l.86 :
      * Parcourt les produits du panier pour supprimer toutes les références identiques ;
      * Sauvegarde le panier à jour ;
      * Recharge la page afin de mettre la vue à jour.
@@ -202,7 +203,7 @@ export default class GlobalCtrl {
 
     /**
      * Valide la commande après plusieurs vérifications.
-     * À l'application de vue_cartVue_getFormEntries() l.109_130 ;
+     * À l'application de vue_cartVue_getFormEntries() l.108_131 ;
      * Vérifie qu'un panier existe bien ;
      * Le cas échéant, récupère les données utilisateur (en vérifiant qu'aucun champs ne soit vide) ;
      * Attend la réponse de l'API (cf model_model_postOrder() l.35) avec les données utilisateur passées en paramètre ;

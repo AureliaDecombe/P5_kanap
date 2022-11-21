@@ -61,7 +61,7 @@ export default class CartVue {
         const pQuantity = document.createElement("p");
         pQuantity.textContent = "Qté : ";
         divQuantity.appendChild(pQuantity);
-    // <input> et valeur, cf controller_globalCtrl_adjustQuantity() l.63:
+    // <input> et valeur, cf controller_globalCtrl_adjustQuantity() l.102:
         const inputQtty = document.createElement("input");
         inputQtty.className = "itemQuantity";
         inputQtty.type = Number;
@@ -77,7 +77,7 @@ export default class CartVue {
         const divDelete = document.createElement("div");
         divDelete.className = "cart__item__content__settings__delete";
         divSettings.appendChild(divDelete);
-    // <p> cliquable pour supprimer, cf controller_globalCtrl_removeProduct() l.51:
+    // <p> cliquable pour supprimer, cf controller_globalCtrl_removeProduct() l.78:
         const pDeleteItem = document.createElement("p");
         pDeleteItem.className = "deleteItem";
         pDeleteItem.textContent = "Supprimer";
@@ -101,9 +101,9 @@ export default class CartVue {
 
     /**
      * Initie l'écoute des données entrées dans le formulaire ;
-     * Vérifie pour chaque entrée que le format correspond à nos attentes, cf controller_globalCtrl_verify"each-entry"() l.80 à l.128 ;
+     * Vérifie pour chaque entrée que le format correspond à nos attentes, cf controller_globalCtrl_verify"each-entry"() l.124 à l.192 ;
      * Initie l'écoute du bouton "commander !" ;
-     * Vérifie la conformité du panier et du formulaire grâce à controller_globalCtrl_confirmOrder() l.216;
+     * Vérifie la conformité du panier et du formulaire grâce à controller_globalCtrl_confirmOrder() l.217;
      */
     getFormEntries () {
         const inputFirstName = document.querySelector("#firstName");
