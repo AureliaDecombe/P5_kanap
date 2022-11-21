@@ -1,20 +1,17 @@
-Tu peux t'en inspirer mais je te prie de ne pas copier/coller 🙇‍♀️🙏
+Visiteur sur github, tu peux t'en inspirer mais je te prie de ne pas copier/coller 🙇‍♀️🙏
 
-# Kanap #
-
-This is the front end and back end server for Project 5 of the Web Developer path.
-
-### Back end Prerequisites ###
-
-You will need to have Node and `npm` installed locally on your machine.
-
-### Back end Installation ###
-
-Clone this repo. From the "back" folder of the project, run `npm install`. You 
-can then run the server with `node server`. 
-The server should run on `localhost` with default port `3000`. If the
-server runs on another port for any reason, this is printed to the
-console when the server starts, e.g. `Listening on port 3001`.
-#� �P�5�_�k�a�n�a�p�
-�
-�
+Pour utiliser cette application :
+### Prérequis ###
+Tu as besoin d'avoir Node et `npm` installés localement sur ton PC.
+### Installation du Back end ###
+Clone le repo ;
+Depuis le back, initie `npm install` ;
+Tu peux ensuite lancer le serveur en tapant `node server` ; 
+Le serveur doit se lancer en `localhost` sur le "default port `3000`" ;
+Si ce n'est pas le cas, refaire les manips 👍.
+### Particularité de mon P5 ###
+Mon mentor et moi avons décidé de réaliser ce projet en architecture Model-Vue-Controller et Programation-Objet-Orienté.
+Ce choix a été fait car j'étais en avance sur ma formation et que c'était l'occasion d'apprendre une autre méthode que le js basique...
+J'ai avant ça fait de multiples exercices afin de maîtriser -autant que mon expérience le permet- le js classique (notamment les fonctions) et je suis vraiment à l'aise avec ça.
+Voilà pourquoi nous avons décidé de compliquer un peu la tâche en partant sur du full MVC et POO.
+C'était costaud, je le reconnais, mais vraiment enrichissant 💡👩‍💻 !
