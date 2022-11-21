@@ -1,19 +1,22 @@
-Visiteur sur github, tu peux t'en inspirer mais je te prie de ne pas copier/coller 🙇‍♀️🙏
-
+#### Visiteur sur github, tu peux t'en inspirer mais je te prie de ne pas copier/coller 🙇‍♀️🙏
 
 Pour utiliser cette application :
 
-### Prérequis ###
+## Prérequis
 Tu as besoin d'avoir Node et `npm` installés localement sur ton PC.
 
-### Installation du Back end ###
+## Installation du Back end
 Clone le repo ;
+
 Depuis le back, initie `npm install` ;
+
 Tu peux ensuite lancer le serveur en tapant `node server` ; 
+
 Le serveur doit se lancer en `localhost` sur le "default port `3000`" ;
+
 Si ce n'est pas le cas, refaire les manips 👍.
 
-### Particularité de mon P5 ###
+## Particularité de mon P5
 Mon mentor et moi avons décidé de réaliser ce projet en architecture Model-Vue-Controller et Programmation-Objet-Orienté.
 
 Ce choix a été fait car j'étais en avance sur ma formation et que c'était l'occasion d'apprendre une autre méthode que le js basique...
