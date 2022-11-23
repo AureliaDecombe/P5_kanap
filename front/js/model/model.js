@@ -2,7 +2,7 @@ export default class Model {
 
     /**
      * Récupère la liste des produits sur l'API fournie (localisation externe) et renvoie une promesse contenant l'objet correspondant au format JSON (JavaScriptObjectNotation).
-     * @returns { Promise }
+     * @returns { Object }
      */
     async getProductsList() {
         try {
@@ -16,7 +16,7 @@ export default class Model {
     /**
      * Récupère la liste des produits sur l'API fournie (localisation externe) en y associant leur Id et renvoie une promesse contenant l'objet correspondant au format JSON.
      * @param { String } idProduct 
-     * @returns { Promise }
+     * @returns { Object }
      */
     async getProductById(idProduct) {
         try {
@@ -30,7 +30,7 @@ export default class Model {
     /**
      * Envoie une promesse au format JSON contenant les données utilisateur (le panier et les coordonnées) à l'API.
      * @param { Object | Array } userData 
-     * @returns { Promise }
+     * @returns { Object }
      */
     async postOrder(userData) {
         try {

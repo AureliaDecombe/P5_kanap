@@ -4,6 +4,22 @@ export default class GlobalCtrl {
     model = new Model();
 
     /**
+     * Appelle le contenu du local storage et le converti en format interprétable par Javascript.
+     * @returns { Object }
+     */
+    getCart() {   
+        return JSON.parse(localStorage.getItem("cart"));
+    }
+
+    /**
+     * Enregistre un objet dans le local storage en le convertissant en format interprétable par ce dernier.
+     * @param { Object } productList productList est le paramètre de base ; selon l'objet à enregistrer, ce dernier sera passé en paramètre.
+     */
+    setCart(productList) {
+        localStorage.setItem("cart", JSON.stringify(productList));
+    }
+
+    /**
      * Enregistre le produit souhaité dans le panier après plusieurs vérifications.
      * À un {product} passé en paramètre dans vue_productVue_saveProductInBasket() l.47_69 :
      * Vérifie si un panier existe déjà ou non ;
@@ -17,10 +33,10 @@ export default class GlobalCtrl {
         if ((localStorage.getItem("cart")) == null){
             let productsInCart = [];
             productsInCart.push(product);
-            localStorage.setItem("cart", JSON.stringify(productsInCart));
+            this.setCart(productsInCart);
             alert("Le produit est ajouté au panier !");
         } else {
-            let productsInCart = JSON.parse(localStorage.getItem("cart"));            
+            let productsInCart = this.getCart();            
             let foundProduct = productsInCart.find((el) => el.productId === product.productId && el.productColor === product.productColor);
             if (foundProduct != undefined){
                 const newProductInCart = productsInCart.map((el) => {
@@ -31,11 +47,11 @@ export default class GlobalCtrl {
                         return el;
                     }                
                 });
-                localStorage.setItem("cart", JSON.stringify(newProductInCart));
+                this.setCart(newProductInCart);
                 alert("Le produit est ajouté au panier !");
             } else {
                 productsInCart.push(product);
-                localStorage.setItem("cart", JSON.stringify(productsInCart));
+                this.setCart(productsInCart);
                 alert("Le produit est ajouté au panier !");
             }            
         }
@@ -52,7 +68,7 @@ export default class GlobalCtrl {
         if (product.productQtty <= 0 || product.productQtty > 100 || !Number.isInteger(JSON.parse(product.productQtty)) || product.productQtty == NaN || product.productColor == 0){
             return 0;
         } else {
-            let productsInCart = JSON.parse(localStorage.getItem("cart"));
+            let productsInCart = this.getCart();
             if (productsInCart != null){
                 let foundProduct = productsInCart.find((el) => el.productId === product.productId && el.productColor === product.productColor);
                 if (foundProduct != undefined){
@@ -76,13 +92,13 @@ export default class GlobalCtrl {
      * @param { String } productColor 
      */
     removeProduct(productId, productColor) {
-        let productsInCart = JSON.parse(localStorage.getItem("cart"));
+        let productsInCart = this.getCart();
         productsInCart = productsInCart.filter((el) => {
             if (el.productId != productId || el.productColor != productColor) {
                 return el;
             }                
         });            
-        localStorage.setItem("cart", JSON.stringify(productsInCart));
+        this.setCart(productsInCart);
         alert("Le produit est supprimé du panier !");
         document.location.reload();        
     }
@@ -100,7 +116,7 @@ export default class GlobalCtrl {
      * @param { Number } inputQtty 
      */
     adjustQuantity(productId, productColor, inputQtty) {
-        let productsInCart = JSON.parse(localStorage.getItem("cart"));
+        let productsInCart = this.getCart();
         let foundProduct = productsInCart.find((el) => el.productId === productId && el.productColor === productColor);
         if (foundProduct != undefined){
             foundProduct.productQtty = inputQtty;
@@ -109,7 +125,7 @@ export default class GlobalCtrl {
                 alert("La quantité doit être comprise entre 1 et 100 !");
                 this.removeProduct(productId, productColor);
             } else {
-                localStorage.setItem("cart", JSON.stringify(productsInCart));
+                this.setCart(productsInCart);
                 alert("Le panier a été modifié !");
                 document.location.reload();
             }
@@ -215,7 +231,7 @@ export default class GlobalCtrl {
      * @param { String } email 
      */
     async confirmOrder(firstName, lastName, address, city, email) {
-        let productsInCart = JSON.parse(localStorage.getItem("cart"));
+        let productsInCart = this.getCart();
         if (productsInCart == null){
             alert("Votre panier est vide : merci de faire vos achats avant de remplir le formulaire...")
         } else {
